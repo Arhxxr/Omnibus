@@ -14,6 +14,8 @@ A payment gateway I built to learn how money actually moves in real systems. Use
 [![OWASP Reviewed](https://img.shields.io/badge/Security-OWASP%20Reviewed-22C55E?style=flat-square)](SECURITY.md)
 [![Tests 250](https://img.shields.io/badge/Tests-250-22C55E?style=flat-square)](README.md#test-suite)
 
+<img width="1871" height="973" alt="Omnibus Screenshot" src="https://github.com/user-attachments/assets/61dc7912-f90c-4ea0-9313-c01acd4a140c" />
+
 ---
 
 ## Why This Project Exists
