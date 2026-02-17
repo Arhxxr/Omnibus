@@ -1,6 +1,6 @@
 # Omnibus
 
-Production-grade payment gateway built with **Java 21**, **Spring Boot 3.5**, **PostgreSQL 16**, and a **React 19 + TypeScript** dashboard. Implements double-entry bookkeeping, pessimistic locking, idempotency keys, and an immutable audit trail — the same patterns used by Stripe, Square, and modern payment processors.
+A payment gateway I built to learn how money actually moves in real systems. Uses **Java 21**, **Spring Boot 3.5**, **PostgreSQL 16**, and a **React 19 + TypeScript** frontend. Covers double-entry bookkeeping, pessimistic locking, idempotency keys, and an immutable audit trail.
 
 [![Java 21](https://img.shields.io/badge/Java-21_LTS-blue)](https://adoptium.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-brightgreen)](https://spring.io/projects/spring-boot)
@@ -12,13 +12,17 @@ Production-grade payment gateway built with **Java 21**, **Spring Boot 3.5**, **
 
 ## Why This Project Exists
 
-Most portfolio projects move money by updating a balance column. Real payment systems can’t do that — they need provable correctness, concurrency safety, and exactly-once processing. Omnibus implements the financial engineering patterns that production payment infrastructure actually requires:
+I noticed most tutorial/portfolio payment apps just increment and decrement a balance column. That works for demos, but it falls apart the moment you need to answer questions like `why does this account have this balance?` or `what happens if two transfers hit the same account at the same time?`
 
-- **Double-entry ledger** — every transfer creates balanced DEBIT/CREDIT entries, not just balance mutations
-- **Pessimistic locking with deterministic ordering** — `SELECT ... FOR UPDATE` with ascending UUID sort prevents both lost updates and deadlocks
-- **Idempotency keys** — exactly-once transfer processing with 24h TTL and cached response replay
-- **Immutable audit trail** — `REQUIRES_NEW` propagation ensures audit entries survive transaction rollbacks
-- **Hexagonal architecture** — domain logic has zero framework dependencies, enforced by ArchUnit at build time
+I wanted to actually work through the problems that come up when you try to do this properly:
+
+- **Double-entry bookkeeping** - every transfer creates balanced DEBIT/CREDIT entries so the ledger is always auditable
+- **Pessimistic locking with deterministic ordering** - `SELECT ... FOR UPDATE` with ascending UUID sort to avoid lost updates and deadlocks
+- **Idempotency keys** - exactly-once transfer processing with 24h TTL and cached response replay
+- **Immutable audit trail** - `REQUIRES_NEW` propagation so audit entries survive transaction rollbacks
+- **Hexagonal architecture** - domain logic has zero framework dependencies, enforced by ArchUnit at build time
+
+This isn't production-ready software. It's a learning project that gave me a much better understanding of how payment systems work under the hood.
 
 ---
 
@@ -26,7 +30,7 @@ Most portfolio projects move money by updating a balance column. Real payment sy
 
 ### Prerequisites
 
-- **Docker Desktop** (required — runs PostgreSQL and backend)
+- **Docker Desktop** (required  - runs PostgreSQL and backend)
 - **Node.js 20+** (for frontend dev server)
 
 ### Run the Full Stack
@@ -48,11 +52,11 @@ Register a new account (auto-funded with $10,000). Open a second browser/incogni
 ### Run Tests
 
 ```bash
-# Backend — 159 tests (requires Docker for Testcontainers)
+# Backend  - 159 tests (requires Docker for Testcontainers)
 ./mvnw clean verify          # Linux/Mac
 .\mvnw.cmd clean verify      # Windows
 
-# Frontend — 91 tests
+# Frontend  - 91 tests
 cd frontend && npm test
 ```
 
@@ -86,7 +90,7 @@ cd frontend && npm test
 
 | Layer | May depend on |
 |-------|--------------|
-| `domain` | Nothing — pure Java |
+| `domain` | Nothing  - pure Java |
 | `application` | `domain` only |
 | `adapter` | `application` + `domain` |
 | `infrastructure` | All layers |
@@ -107,7 +111,7 @@ Header: Idempotency-Key: <uuid>
    - CREDIT target  → balance_after recorded
 5. Update account balances atomically
 6. Cache response against idempotency key (24h TTL)
-7. Write audit log (REQUIRES_NEW — survives rollback)
+7. Write audit log (REQUIRES_NEW  - survives rollback)
 ```
 
 Concurrent stress tests verify this works correctly with 20 parallel threads hammering the same accounts.
@@ -118,8 +122,8 @@ Concurrent stress tests verify this works correctly with 20 parallel threads ham
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| `POST` | `/api/v1/auth/register` | — | Create account, returns JWT |
-| `POST` | `/api/v1/auth/login` | — | Authenticate, returns JWT |
+| `POST` | `/api/v1/auth/register` |  - | Create account, returns JWT |
+| `POST` | `/api/v1/auth/login` |  - | Authenticate, returns JWT |
 | `GET` | `/api/v1/auth/me` | JWT | User profile + accounts |
 | `GET` | `/api/v1/accounts` | JWT | List user's accounts |
 | `GET` | `/api/v1/accounts/{id}` | JWT | Account detail (ownership verified) |
@@ -180,7 +184,7 @@ src/main/java/com/omnibus/
 ├── domain/
 │   ├── model/           Account, Transaction, Money (value object), LedgerEntry, User
 │   ├── exception/       InsufficientFunds, AccountNotFound, Ownership, Idempotency
-│   └── service/         TransferDomainService — pure double-entry logic
+│   └── service/         TransferDomainService  - pure double-entry logic
 ├── application/
 │   ├── port/in/         Use case interfaces (Auth, Transfer, Account)
 │   ├── port/out/        Repository + infrastructure port interfaces
@@ -198,8 +202,8 @@ src/main/java/com/omnibus/
 frontend/src/
 ├── pages/               Login, Register, Dashboard, SendMoney, Activity, Settings
 ├── components/          ErrorBoundary, ProtectedRoute, Sidebar, reusable UI
-├── contexts/            AuthContext — JWT lifecycle, auto-logout on 401
-├── hooks/               useTheme — dark/light with localStorage persistence
+├── contexts/            AuthContext  - JWT lifecycle, auto-logout on 401
+├── hooks/               useTheme  - dark/light with localStorage persistence
 ├── lib/                 Axios client with JWT interceptor, utility functions
 └── types/               TypeScript interfaces for all API contracts
 ```
@@ -241,8 +245,8 @@ Documented as Architecture Decision Records in [`docs/adr/`](docs/adr/):
 | [001](docs/adr/001-hexagonal-architecture.md) | Hexagonal architecture with ArchUnit enforcement |
 | [002](docs/adr/002-double-entry-bookkeeping.md) | Double-entry bookkeeping with `BigDecimal` HALF_EVEN precision |
 | [003](docs/adr/003-pessimistic-locking-strategy.md) | Pessimistic locking + deterministic UUID ordering for deadlock prevention |
-| [004](docs/adr/004-tech-stack-versions.md) | Dependency audit — Testcontainers/Docker API compatibility, Hibernate 6.6 strict validation |
-| [005](docs/adr/005-react-frontend-architecture.md) | React SPA migration — TanStack Query, Zod validation, JWT auth flow |
+| [004](docs/adr/004-tech-stack-versions.md) | Dependency audit  - Testcontainers/Docker API compatibility, Hibernate 6.6 strict validation |
+| [005](docs/adr/005-react-frontend-architecture.md) | React SPA migration  - TanStack Query, Zod validation, JWT auth flow |
 
 ---
 
