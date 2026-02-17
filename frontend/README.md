@@ -56,7 +56,7 @@ src/
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm
+- **Node.js** 20.19+ and npm
 - **Omnibus backend** running on `http://localhost:8080`
 
 ### Development

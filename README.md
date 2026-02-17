@@ -31,7 +31,7 @@ This isn't production-ready software. It's a learning project that gave me a muc
 ### Prerequisites
 
 - **Docker Desktop** (required  - runs PostgreSQL and backend)
-- **Node.js 20+** (for frontend dev server)
+- **Node.js 20.19+** (for frontend dev server)
 
 ### Run the Full Stack
 
