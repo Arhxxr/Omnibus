@@ -2,12 +2,17 @@
 
 A payment gateway I built to learn how money actually moves in real systems. Uses **Java 21**, **Spring Boot 3.5**, **PostgreSQL 16**, and a **React 19 + TypeScript** frontend. Covers double-entry bookkeeping, pessimistic locking, idempotency keys, and an immutable audit trail.
 
-[![Security Reviewed](https://img.shields.io/badge/Security-OWASP%20Top%2010%20Reviewed-success)](SECURITY.md)
-[![Architecture](https://img.shields.io/badge/Architecture-Hexagonal-blueviolet)](docs/adr/001-hexagonal-architecture.md)
-[![Ledger](https://img.shields.io/badge/Accounting-Double--Entry-0A66C2)](docs/adr/002-double-entry-bookkeeping.md)
-[![Concurrency](https://img.shields.io/badge/Concurrency-Pessimistic%20Locking-orange)](docs/adr/003-pessimistic-locking-strategy.md)
-[![Idempotency](https://img.shields.io/badge/Transfers-Idempotent-2E8B57)](README.md)
-[![Integration Tests](https://img.shields.io/badge/Integration-Testcontainers-2496ED)](docs/adr/004-tech-stack-versions.md)
+[![Java 21](https://img.shields.io/badge/Java-21_LTS-3B82F6?style=flat-square&logo=openjdk&logoColor=white)](https://adoptium.net/)
+[![Spring Boot 3.5](https://img.shields.io/badge/Spring_Boot-3.5-22C55E?style=flat-square&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-3B82F6?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![React 19](https://img.shields.io/badge/React-19-0EA5E9?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
+[![Node 20.19+](https://img.shields.io/badge/Node-20.19%2B-22C55E?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+
+[![Double-Entry Ledger](https://img.shields.io/badge/Double--Entry-Ledger-6366F1?style=flat-square)](docs/adr/002-double-entry-bookkeeping.md)
+[![Idempotent Transfers](https://img.shields.io/badge/Transfers-Idempotent-10B981?style=flat-square)](README.md#how-transfers-work)
+[![Row Locking](https://img.shields.io/badge/Concurrency-Row%20Locking-F59E0B?style=flat-square)](docs/adr/003-pessimistic-locking-strategy.md)
+[![OWASP Reviewed](https://img.shields.io/badge/Security-OWASP%20Reviewed-22C55E?style=flat-square)](SECURITY.md)
+[![Tests 250](https://img.shields.io/badge/Tests-250-22C55E?style=flat-square)](README.md#test-suite)
 
 ---
 
