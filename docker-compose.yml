@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: omnibus-db
+    environment:
+      POSTGRES_DB: omnibus
+      POSTGRES_USER: omnibus
+      POSTGRES_PASSWORD: omnibus_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "work_mem=16MB"
+      - "-c"
+      - "statement_timeout=10s"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omnibus -d omnibus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - omnibus-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnibus-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/omnibus
+      SPRING_DATASOURCE_USERNAME: omnibus
+      SPRING_DATASOURCE_PASSWORD: omnibus_secret
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - omnibus-net
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  omnibus-net:
+    driver: bridge

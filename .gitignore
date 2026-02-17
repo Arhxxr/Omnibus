@@ -1,0 +1,45 @@
+# Build output
+target/
+frontend/dist/
+frontend/node_modules/
+
+# Maven wrapper JAR (downloaded automatically)
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# IDE / Editor
+*.iml
+.idea/
+.vscode/
+*.code-workspace
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Compiled
+*.class
+*.jar
+*.war
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+
+# Session / Planning artifacts
+CONTEXT.md
+PLAN.md
+CHANGELOG.md

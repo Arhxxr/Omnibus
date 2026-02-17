@@ -1,0 +1,98 @@
+# ============================================================================
+# Omnibus — Application Configuration
+# ============================================================================
+
+spring:
+  application:
+    name: Omnibus
+
+  # ---- Virtual Threads (Project Loom) ----
+  threads:
+    virtual:
+      enabled: true
+
+  # ---- DataSource & HikariCP ----
+  datasource:
+    url: jdbc:postgresql://localhost:5432/omnibus
+    username: omnibus
+    password: omnibus_secret
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 5000
+      idle-timeout: 300000
+      max-lifetime: 600000
+      pool-name: omnibus-HikariPool
+
+  # ---- JPA / Hibernate ----
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  # ---- Flyway ----
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+
+  # ---- Jackson ----
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+# ---- JWT Configuration ----
+app:
+  jwt:
+    secret: "Omnibus-JWT-Secret-Key-Must-Be-At-Least-256-Bits-Long-For-HS256"
+    expiration-ms: 900000  # 15 minutes
+
+# ---- Idempotency ----
+  idempotency:
+    ttl-hours: 24
+
+# ---- Server ----
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# ---- Actuator ----
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# ---- Logging ----
+logging:
+  level:
+    com.omnibus: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# ---- SpringDoc / OpenAPI ----
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+  show-actuator: false
+  default-produces-media-type: application/json

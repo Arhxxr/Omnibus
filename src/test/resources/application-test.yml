@@ -1,0 +1,18 @@
+# ---- Test-specific overrides ----
+spring:
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+# Disable scheduled cleanup during tests to avoid background noise;
+# tests invoke cleanup explicitly when needed.
+app:
+  idempotency:
+    cleanup-interval-ms: 999999999
+
+logging:
+  level:
+    com.omnibus: DEBUG
+    org.hibernate.SQL: DEBUG

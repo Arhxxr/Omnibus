@@ -1,0 +1,25 @@
+# Dependencies
+frontend/node_modules/
+frontend/dist/
+
+# Build output
+target/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docs (not needed in image)
+docs/
+load-tests/
+*.md
+!README.md
