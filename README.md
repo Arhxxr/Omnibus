@@ -74,9 +74,9 @@ cd frontend && npm test
 │  Spring Boot API (Hexagonal Architecture)                │
 │                                                          │
 │  domain/         Pure business logic. No Spring deps.    │
-│  application/    Use cases, ports, DTOs                   │
-│  adapter/        REST controllers + JPA persistence       │
-│  infrastructure/ Security, config, scheduling             │
+│  application/    Use cases, ports, DTOs                  │
+│  adapter/        REST controllers + JPA persistence      │
+│  infrastructure/ Security, config, scheduling            │
 └──────────────────┬───────────────────────────────────────┘
                    │ JDBC + Flyway
 ┌──────────────────▼───────────────────────────────────────┐
