@@ -2,11 +2,12 @@
 
 A payment gateway I built to learn how money actually moves in real systems. Uses **Java 21**, **Spring Boot 3.5**, **PostgreSQL 16**, and a **React 19 + TypeScript** frontend. Covers double-entry bookkeeping, pessimistic locking, idempotency keys, and an immutable audit trail.
 
-[![Java 21](https://img.shields.io/badge/Java-21_LTS-blue)](https://adoptium.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-brightgreen)](https://spring.io/projects/spring-boot)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](https://www.postgresql.org/)
-[![React 19](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
-[![Tests](https://img.shields.io/badge/Tests-250-brightgreen)]()
+[![Security Reviewed](https://img.shields.io/badge/Security-OWASP%20Top%2010%20Reviewed-success)](SECURITY.md)
+[![Architecture](https://img.shields.io/badge/Architecture-Hexagonal-blueviolet)](docs/adr/001-hexagonal-architecture.md)
+[![Ledger](https://img.shields.io/badge/Accounting-Double--Entry-0A66C2)](docs/adr/002-double-entry-bookkeeping.md)
+[![Concurrency](https://img.shields.io/badge/Concurrency-Pessimistic%20Locking-orange)](docs/adr/003-pessimistic-locking-strategy.md)
+[![Idempotency](https://img.shields.io/badge/Transfers-Idempotent-2E8B57)](README.md)
+[![Integration Tests](https://img.shields.io/badge/Integration-Testcontainers-2496ED)](docs/adr/004-tech-stack-versions.md)
 
 ---
 
