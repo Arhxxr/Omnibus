@@ -23,6 +23,6 @@ Desktop.ini
 !.env.example
 __pycache__/
 *.pyc
-CONTEXT.md
-PLAN.md
-CHANGELOG.md
+MEMORY.md
+DESIGN.md
+LOG.md
