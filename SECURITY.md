@@ -92,9 +92,3 @@
 ### Dependency Scanning
 - Consider adding `org.owasp:dependency-check-maven` plugin for automated CVE detection in CI
 - Run `npm audit` on the frontend as part of CI pipeline
-
----
-
-## Security Contact
-
-For security concerns, contact the engineering team via the repository's security advisory feature.
